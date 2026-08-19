@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>College Attendance — Government Polytechnic Muzaffarpur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink-navy:#1B2A4A;
+    --register-cream:#F6F1E4;
+    --paper:#FFFDF8;
+    --stamp-teal:#2F6E62;
+    --stamp-teal-dark:#245650;
+    --register-amber:#C1852B;
+    --alert-red:#A83B32;
+    --ink-text:#24261F;
+    --ink-muted:#6B6656;
+    --rule:#D8D0BA;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:var(--register-cream);
+    color:var(--ink-text);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:15px;
+    line-height:1.5;
+    padding:28px 14px 60px;
+  }
+
+  h1,h2,h3{
+    font-family:'Zilla Slab', serif;
+    color:var(--ink-navy);
+    margin:0 0 6px;
+    letter-spacing:0.01em;
+  }
+  h2{ font-size:22px; font-weight:600; }
+  h3{ font-size:16px; font-weight:600; margin-top:22px; }
+
+  .app-shell{
+    max-width:560px;
+    margin:0 auto;
+  }
+
+  .masthead{
+    background:var(--ink-navy);
+    color:var(--register-cream);
+    padding:22px 24px 18px;
+    border-radius:10px 10px 0 0;
+    text-align:center;
+  }
+  .masthead .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    opacity:0.72;
+    margin-bottom:6px;
+  }
+  .masthead h1{
+    color:var(--register-cream);
+    font-size:24px;
+    margin-bottom:2px;
+  }
+  .masthead .sub{
+    font-size:13px;
+    opacity:0.85;
+  }
+  .rule-double{
+    height:0;
+    border-top:3px double var(--register-amber);
+    margin:0 24px;
+  }
+
+  .card{
+    background:var(--paper);
+    border:1px solid var(--rule);
+    border-top:none;
+    border-radius:0 0 10px 10px;
+    padding:26px 24px 28px;
+    box-shadow:0 1px 0 rgba(27,42,74,0.04);
+  }
+
+  .page{ display:none; }
+  .page.active{ display:block; }
+
+  p{ margin:0 0 12px; color:var(--ink-text); }
+  .lede{ color:var(--ink-muted); }
+
+  .field{ margin-bottom:16px; }
+  .field label{
+    display:block;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--ink-muted);
+    margin-bottom:6px;
+  }
+  input[type=text], input[type=password], select, textarea{
+    width:100%;
+    padding:10px 12px;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:15px;
+    color:var(--ink-text);
+    background:var(--paper);
+    border:1px solid var(--rule);
+    border-radius:6px;
+    outline:none;
+  }
+  input:focus, select:focus, textarea:focus{
+    border-color:var(--stamp-teal);
+    box-shadow:0 0 0 3px rgba(47,110,98,0.16);
+  }
+  input[readonly]{ background:#F1ECDD; color:var(--ink-muted); }
+  #code-input{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    font-size:20px;
+    text-align:center;
+  }
+  textarea{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    height:340px;
+    resize:vertical;
+    line-height:1.6;
+  }
+
+  button{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    color:#fff;
+    background:var(--stamp-teal);
+    border:none;
+    border-radius:7px;
+    padding:11px 18px;
+    cursor:pointer;
+  }
+  button:hover{ background:var(--stamp-teal-dark); }
+  button:focus-visible{ outline:3px solid var(--register-amber); outline-offset:2px; }
+  button.secondary{
+    background:transparent;
+    color:var(--ink-navy);
+    border:1px solid var(--rule);
+  }
+  button.secondary:hover{ background:#F1ECDD; }
+  button.link-btn{
+    background:none;
+    color:var(--stamp-teal-dark);
+    padding:6px 0;
+    text-decoration:underline;
+  }
+  button.link-btn:hover{ background:none; color:var(--ink-navy); }
+
+  .btn-row{ margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; }
+
+  .option-row{ display:flex; flex-direction:column; gap:10px; margin-top:16px; }
+  .option-row button{ width:100%; text-align:left; padding:14px 16px; }
+
+  .error-msg{ color:var(--alert-red); font-size:13px; margin-top:8px; }
+
+  table{ border-collapse:collapse; width:100%; margin-top:10px; font-size:13.5px; }
+  th, td{ padding:8px 10px; text-align:left; border-bottom:1px solid var(--rule); }
+  th{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-muted);
+  }
+  td{ font-variant-numeric:tabular-nums; }
+  tbody tr:nth-child(odd){ background:#FBF8EF; }
+
+  .stat-line{ font-size:13px; color:var(--ink-muted); margin-top:4px; }
+  .stat-line strong{ color:var(--ink-navy); font-family:'IBM Plex Mono', monospace; }
+
+  /* Signature element: ticket-stub attendance codes */
+  .code-stub{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:16px;
+    letter-spacing:0.08em;
+    color:var(--ink-navy);
+    background:#FBEBD2;
+    border:1.5px dashed var(--register-amber);
+    border-radius:6px;
+    padding:8px 12px;
+    margin:0 8px 8px 0;
+    position:relative;
+  }
+  .codes-wrap{ display:flex; flex-wrap:wrap; margin-top:8px; }
+
+  .camera-frame{
+    background:var(--ink-navy);
+    border-radius:10px;
+    padding:10px;
+  }
+  video, .captured-photo{
+    width:100%;
+    max-width:420px;
+    display:block;
+    border-radius:6px;
+    background:#000;
+  }
+  .photo-preview-wrap{
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+    background:#F1ECDD;
+    border:1px solid var(--rule);
+    border-radius:8px;
+    padding:14px;
+    margin-bottom:18px;
+  }
+  .photo-preview-wrap img{
+    width:120px;
+    border-radius:5px;
+    border:1px solid var(--rule);
+    flex-shrink:0;
+  }
+  .photo-preview-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--ink-muted);
+    margin-bottom:6px;
+  }
+  .status-line{ font-size:13px; color:var(--stamp-teal-dark); margin-top:10px; min-height:18px; }
+
+  .success-banner{
+    background:#E9F2EE;
+    border:1px solid var(--stamp-teal);
+    border-radius:8px;
+    padding:16px 18px;
+    margin-bottom:16px;
+  }
+  .serial-big{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:34px;
+    font-weight:600;
+    color:var(--stamp-teal-dark);
+  }
+
+  .session-meta{
+    font-size:13px;
+    color:var(--ink-muted);
+    border-bottom:1px solid var(--rule);
+    padding-bottom:14px;
+    margin-bottom:4px;
+  }
+  .session-meta b{ color:var(--ink-text); }
+
+  footer.note{
+    text-align:center;
+    font-size:11.5px;
+    color:var(--ink-muted);
+    margin-top:14px;
+  }
+
+  @media (max-width:480px){
+    .masthead{ padding:18px 16px 14px; }
+    .card{ padding:20px 16px 24px; }
+    .serial-big{ font-size:28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <div class="masthead">
+    <div class="eyebrow">Attendance Register · Digital</div>
+    <h1>Government Polytechnic</h1>
+    <div class="sub">Muzaffarpur — Computer Science &amp; Engineering</div>
+  </div>
+  <div class="rule-double"></div>
+
+  <div class="card">
+
+    <!-- ================= WELCOME PAGE ================= -->
+    <div id="page-welcome" class="page active">
+      <h2>Welcome</h2>
+      <p class="lede">Select a section to continue.</p>
+      <div class="option-row">
+        <button onclick="showPage('page-student-welcome')">Student — Mark Attendance</button>
+        <button onclick="showPage('page-cr-login')">Class Representative</button>
+        <button class="secondary" onclick="showPage('page-admin-login')">Admin</button>
+      </div>
+    </div>
+
+    <!-- ================= STUDENT SECTION ================= -->
+    <div id="page-student-welcome" class="page">
+      <h2>Student</h2>
+      <p class="lede">You'll photograph your College ID Card, confirm your Name and Roll Number, then enter the Attendance Code given by your Class Representative.</p>
+      <div class="btn-row">
+        <button onclick="startCapture()">Start Attendance</button>
+        <button class="secondary" onclick="showPage('page-welcome')">Back</button>
+      </div>
+    </div>
+
+    <div id="page-student-capture" class="page">
+      <h2>Capture College ID Card</h2>
+      <p class="lede">Hold your ID card steady inside the frame, then capture.</p>
+      <div class="camera-frame">
+        <video id="camera-video" autoplay playsinline></video>
+      </div>
+      <canvas id="capture-canvas" style="display:none;"></canvas>
+      <div class="btn-row">
+        <button id="capture-btn" onclick="capturePhoto()">Capture Photo</button>
+        <button class="secondary" onclick="showPage('page-student-welcome')">Cancel</button>
+      </div>
+      <p class="status-line" id="ocr-status"></p>
+    </div>
+
+    <div id="page-student-preview" class="page">
+      <h2>Confirm Your Details</h2>
+      <p class="lede">Detected from your ID card. Edit anything that looks wrong, then confirm.</p>
+      <div class="photo-preview-wrap">
+        <img id="preview-photo" src="" alt="Captured ID card photo">
+        <div>
+          <div class="photo-preview-label">Captured ID Card</div>
+          <button class="link-btn" onclick="startCapture()">Retake Photo</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Student Name</label>
+        <input type="text" id="preview-name">
+      </div>
+      <div class="field">
+        <label>Roll Number</label>
+        <input type="text" id="preview-roll">
+      </div>
+      <div class="btn-row">
+        <button onclick="confirmStudentInfo()">Confirm Information</button>
+      </div>
+    </div>
+
+    <div id="page-student-code" class="page">
+      <h2>Enter Attendance Code</h2>
+      <p class="lede">Enter the 3-character code given to you by your Class Representative.</p>
+      <div class="field">
+        <label>Attendance Code</label>
+        <input type="text" id="code-input" maxlength="3" placeholder="A7K">
+      </div>
+      <div class="btn-row">
+        <button onclick="submitAttendanceCode()">Submit Attendance</button>
+      </div>
+      <p class="error-msg" id="code-error"></p>
+    </div>
+
+    <div id="page-student-result" class="page">
+      <h2>Attendance Submitted</h2>
+      <div class="success-banner">
+        <p style="margin-bottom:4px;">Your attendance has been recorded.</p>
+        <div class="serial-big">Serial No. <span id="result-serial"></span></div>
+      </div>
+      <div class="btn-row"><button class="secondary" onclick="showPage('page-welcome')">Return to Welcome Page</button></div>
+    </div>
+
+    <!-- ================= CLASS REPRESENTATIVE SECTION ================= -->
+    <div id="page-cr-login" class="page">
+      <h2>Class Representative Login</h2>
+      <div class="field"><label>Username</label><input type="text" id="cr-username"></div>
+      <div class="field"><label>Password</label><input type="password" id="cr-password"></div>
+      <div class="btn-row">
+        <button onclick="crLogin()">Login</button>
+        <button class="secondary" onclick="showPage('page-welcome')">Back</button>
+      </div>
+      <p class="error-msg" id="cr-login-error"></p>
+    </div>
+
+    <div id="page-cr-form" class="page">
+      <h2>Attendance Form</h2>
+      <div class="field">
+        <label>Select Day</label>
+        <select id="day-select" onchange="onDaySelected()">
+          <option value="">-- Select Day --</option>
+          <option>Monday</option>
+          <option>Tuesday</option>
+          <option>Wednesday</option>
+          <option>Thursday</option>
+          <option>Friday</option>
+          <option>Saturday</option>
+        </select>
+      </div>
+      <div class="field" id="subject-field-wrapper" style="display:none;">
+        <label>Select Subject</label>
+        <select id="subject-select" onchange="onSubjectSelected()">
+          <option value="">-- Select Subject --</option>
+        </select>
+      </div>
+      <div id="prof-time-wrapper" style="display:none;">
+        <div class="field"><label>Professor</label><input type="text" id="prof-display" readonly></div>
+        <div class="field"><label>Class Time</label><input type="text" id="time-display" readonly></div>
+        <h3>Summary</h3>
+        <p>Subject: <b id="final-subject"></b></p>
+        <p>Professor: <b id="final-prof"></b></p>
+        <p>Time: <b id="final-time"></b></p>
+        <div class="btn-row"><button onclick="createSession()">Submit / Next</button></div>
+      </div>
+    </div>
+
+    <div id="page-cr-session" class="page">
+      <h2>Attendance Session Active</h2>
+      <div class="session-meta">
+        <b id="sess-day"></b> · <span id="sess-subject"></span> · <span id="sess-prof"></span> · <span id="sess-time"></span> · <span id="sess-date"></span>
+      </div>
+
+      <h3>Active Attendance Codes</h3>
+      <p class="lede" style="font-size:13px;">Give any active code below to a student.</p>
+      <div class="codes-wrap" id="active-codes-list"></div>
+
+      <h3>Live Attendance Preview</h3>
+      <div class="stat-line">Total submitted: <strong id="live-total">0</strong></div>
+      <table>
+        <thead><tr><th>S.N.</th><th>Roll No.</th><th>Name</th><th>Time</th></tr></thead>
+        <tbody id="live-preview-body"></tbody>
+      </table>
+
+      <div class="btn-row">
+        <button onclick="goToCollect()">Collect Attendance</button>
+      </div>
+    </div>
+
+    <div id="page-cr-collect" class="page">
+      <h2>Collect Attendance</h2>
+      <h3>Review Collected Attendance</h3>
+      <table>
+        <thead><tr><th>S.N.</th><th>Name</th><th>Roll No.</th></tr></thead>
+        <tbody id="collect-review-body"></tbody>
+      </table>
+
+      <div class="btn-row">
+        <button onclick="generateFinalText()">Generate Text Format</button>
+      </div>
+
+      <div id="final-text-wrapper" style="display:none;">
+        <h3>Review Generated Text</h3>
+        <textarea id="final-text-area" readonly></textarea>
+        <div class="btn-row">
+          <button onclick="finalSubmit()">Final Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="page-cr-sent" class="page">
+      <h2>Attendance Finalized</h2>
+      <p class="lede">The attendance session is locked. This is the final record for this session.</p>
+      <div class="btn-row">
+        <button id="whatsapp-btn" onclick="openWhatsApp()">Open Professor's WhatsApp &amp; Send Text</button>
+      </div>
+      <div class="btn-row"><button class="secondary" onclick="showPage('page-welcome')">Return to Welcome Page</button></div>
+    </div>
+
+    <!-- ================= ADMIN SECTION ================= -->
+    <div id="page-admin-login" class="page">
+      <h2>Admin Login</h2>
+      <div class="field"><label>Admin ID</label><input type="text" id="admin-username"></div>
+      <div class="field"><label>Password</label><input type="password" id="admin-password"></div>
+      <div class="btn-row">
+        <button onclick="adminLogin()">Login</button>
+        <button class="secondary" onclick="showPage('page-welcome')">Back</button>
+      </div>
+      <p class="error-msg" id="admin-login-error"></p>
+    </div>
+
+    <div id="page-admin-dashboard" class="page">
+      <h2>Admin Dashboard</h2>
+      <p class="lede">Admin has access to the same attendance functionality as the Class Representative.</p>
+      <div class="btn-row">
+        <button onclick="isAdminSession=true; showPage('page-cr-form')">Go to Attendance Functionality</button>
+      </div>
+      <h3>Advanced Admin Options</h3>
+      <p class="lede">(Advanced Admin management options are not yet defined in this version.)</p>
+      <div class="btn-row"><button class="secondary" onclick="showPage('page-welcome')">Return to Welcome Page</button></div>
+    </div>
+
+  </div>
+  <footer class="note">Attendance codes are single-use and refresh automatically. Session data syncs live between Student and CR views.</footer>
+</div>
+
+<script>
+/* =========================================================
+   PREDEFINED DATA
+   ========================================================= */
+const ROUTINE = {
+  Monday: [
+    { subject:"Operating System", professor:"Prof. Arvind Kumar", time:"10:00–11:00" },
+    { subject:"Discrete Structures", professor:"Prof. Sweta", time:"11:00–12:00" },
+    { subject:"DSA", professor:"Prof. Nikhil Kumar", time:"12:00–01:00" },
+    { subject:"DE & µP", professor:"Prof. Krishna Mohan", time:"02:00–03:00" },
+    { subject:"DE & µP LAB", professor:"Prof. Krishna Mohan", time:"03:00–05:00" }
+  ],
+  Tuesday: [
+    { subject:"DSA", professor:"Prof. Nikhil Kumar", time:"10:00–11:00" },
+    { subject:"Python Prog. Lab", professor:"Prof. Suman Shekhar", time:"11:00–01:00" },
+    { subject:"Operating System", professor:"Prof. Arvind Kumar", time:"02:00–03:00" },
+    { subject:"DSA LAB", professor:"Prof. Nikhil Kumar", time:"03:00–05:00" }
+  ],
+  Wednesday: [
+    { subject:"DE & µP", professor:"Prof. Krishna Mohan", time:"10:00–11:00" },
+    { subject:"Python Prog.", professor:"Prof. Suman Shekhar", time:"11:00–12:00" },
+    { subject:"Principles of Management", professor:"Prof. Aastha", time:"12:00–01:00" },
+    { subject:"DSA", professor:"Prof. Nikhil Kumar", time:"02:00–03:00" },
+    { subject:"Summer Internship-I", professor:"Prof. Arvind Kumar", time:"03:00–05:00" }
+  ],
+  Thursday: [
+    { subject:"Discrete Structures", professor:"Prof. Sweta", time:"10:00–11:00" },
+    { subject:"DSA LAB", professor:"Prof. Nikhil Kumar", time:"11:00–01:00" },
+    { subject:"DE & µP", professor:"Prof. Krishna Mohan", time:"02:00–03:00" },
+    { subject:"Python Prog. TW", professor:"Prof. Suman Shekhar", time:"03:00–04:00" },
+    { subject:"Sports, Yoga & Medi.", professor:"Dr. Sudhir Prasad Singh", time:"04:00–05:00" }
+  ],
+  Friday: [
+    { subject:"Python Prog.", professor:"Prof. Suman Shekhar", time:"10:00–11:00" },
+    { subject:"DE & µP LAB", professor:"Prof. Krishna Mohan", time:"11:00–01:00" },
+    { subject:"Discrete Structures", professor:"Prof. Sweta", time:"02:00–03:00" },
+    { subject:"Python Prog. Lab", professor:"Prof. Suman Shekhar", time:"03:00–05:00" }
+  ],
+  Saturday: [
+    { subject:"Operating System", professor:"Prof. Arvind Kumar", time:"10:00–11:00" },
+    { subject:"Operating System TW", professor:"Prof. Arvind Kumar", time:"11:00–12:00" },
+    { subject:"Discrete Structures TW", professor:"Prof. Sweta", time:"12:00–01:00" },
+    { subject:"Python Prog.", professor:"Prof. Suman Shekhar", time:"02:00–03:00" },
+    { subject:"DSA TW", professor:"Prof. Nikhil Kumar", time:"03:00–04:00" },
+    { subject:"Summer Internship-I", professor:"Prof. Arvind Kumar", time:"04:00–05:00" }
+  ]
+};
+
+/* Predefined Professor WhatsApp numbers (placeholder numbers - replace with real numbers) */
+const PROFESSOR_WHATSAPP = {
+  "Prof. Arvind Kumar": "910000000001",
+  "Prof. Sweta": "910000000002",
+  "Prof. Nikhil Kumar": "910000000003",
+  "Prof. Krishna Mohan": "910000000004",
+  "Prof. Suman Shekhar": "910000000005",
+  "Prof. Aastha": "910000000006",
+  "Dr. Sudhir Prasad Singh": "910000000007"
+};
+
+/* Demo credentials (hardcoded, no backend authentication server) */
+const CR_CREDENTIALS = { username: "cr", password: "cr123" };
+const ADMIN_CREDENTIALS = { username: "admin", password: "admin123" };
+
+let isAdminSession = false;
+let livePreviewTimer = null;
+let currentSelectedSubjectData = null;
+let capturedImageDataUrl = null;
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+function showPage(id) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  if (id !== "page-cr-session" && livePreviewTimer) {
+    clearInterval(livePreviewTimer);
+    livePreviewTimer = null;
+  }
+}
+
+/* =========================================================
+   SHARED STORAGE HELPERS
+   ========================================================= */
+async function storageGet(key) {
+  try {
+    const r = await window.storage.get(key, true);
+    return r ? JSON.parse(r.value) : null;
+  } catch (e) {
+    return null;
+  }
+}
+async function storageSet(key, value) {
+  try {
+    await window.storage.set(key, JSON.stringify(value), true);
+  } catch (e) {
+    console.error("Storage error:", e);
+  }
+}
+
+/* =========================================================
+   STUDENT SECTION
+   ========================================================= */
+let cameraStream = null;
+
+async function startCapture() {
+  showPage('page-student-capture');
+  document.getElementById('ocr-status').textContent = '';
+  try {
+    cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+    document.getElementById('camera-video').srcObject = cameraStream;
+  } catch (e) {
+    document.getElementById('ocr-status').textContent = 'Camera access failed: ' + e.message;
+  }
+}
+
+async function capturePhoto() {
+  const video = document.getElementById('camera-video');
+  const canvas = document.getElementById('capture-canvas');
+  canvas.width = video.videoWidth || 320;
+  canvas.height = video.videoHeight || 240;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  if (cameraStream) {
+    cameraStream.getTracks().forEach(t => t.stop());
+    cameraStream = null;
+  }
+
+  document.getElementById('ocr-status').textContent = 'Reading ID card…';
+  capturedImageDataUrl = canvas.toDataURL('image/png');
+  document.getElementById('preview-photo').src = capturedImageDataUrl;
+
+  try {
+    const result = await Tesseract.recognize(capturedImageDataUrl, 'eng');
+    const text = result.data.text;
+    const extracted = extractNameAndRoll(text);
+    document.getElementById('ocr-status').textContent = '';
+    document.getElementById('preview-name').value = extracted.name;
+    document.getElementById('preview-roll').value = extracted.roll;
+    showPage('page-student-preview');
+  } catch (e) {
+    document.getElementById('ocr-status').textContent = 'OCR failed. Please enter details manually.';
+    document.getElementById('preview-name').value = '';
+    document.getElementById('preview-roll').value = '';
+    showPage('page-student-preview');
+  }
+  /* Photo is kept only in memory for this preview step - never sent to permanent storage */
+}
+
+function extractNameAndRoll(text) {
+  const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+  let name = '';
+  let roll = '';
+  for (const line of lines) {
+    const lower = line.toLowerCase();
+    if (lower.includes('roll')) {
+      const match = line.match(/[:\-]?\s*([A-Za-z0-9\/]+)\s*$/);
+      if (match) roll = match[1];
+    } else if (lower.includes('name') && !name) {
+      const match = line.match(/name\s*[:\-]?\s*(.*)/i);
+      if (match && match[1]) name = match[1].trim();
+    }
+  }
+  return { name, roll };
+}
+
+let confirmedStudent = { name: '', roll: '' };
+
+function confirmStudentInfo() {
+  confirmedStudent.name = document.getElementById('preview-name').value.trim();
+  confirmedStudent.roll = document.getElementById('preview-roll').value.trim();
+  document.getElementById('code-error').textContent = '';
+  document.getElementById('code-input').value = '';
+  showPage('page-student-code');
+}
+
+async function submitAttendanceCode() {
+  const enteredCode = document.getElementById('code-input').value.trim().toUpperCase();
+  const errorEl = document.getElementById('code-error');
+  errorEl.textContent = '';
+
+  const session = await storageGet('session');
+  if (!session || !session.active || session.locked) {
+    errorEl.textContent = 'No active attendance session is currently open.';
+    return;
+  }
+
+  let codes = await storageGet('codes');
+  if (!codes) codes = [];
+
+  const idx = codes.findIndex(c => c.code === enteredCode && c.status === 'active');
+  if (idx === -1) {
+    errorEl.textContent = 'Attendance Code is incorrect, invalid, expired, or already used.';
+    return;
+  }
+
+  /* Mark code as used and generate replacement */
+  codes[idx].status = 'used';
+  const newCode = generateCode(codes);
+  codes.push({ code: newCode, status: 'active' });
+  await storageSet('codes', codes);
+
+  /* Record submission */
+  let submissions = await storageGet('submissions');
+  if (!submissions) submissions = [];
+  const serial = submissions.length + 1;
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  submissions.push({
+    serial: serial,
+    name: confirmedStudent.name,
+    roll: confirmedStudent.roll,
+    time: timeStr
+  });
+  await storageSet('submissions', submissions);
+
+  document.getElementById('result-serial').textContent = serial;
+  showPage('page-student-result');
+}
+
+function generateCode(existingCodes) {
+  const pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code;
+  let attempts = 0;
+  do {
+    code = '';
+    for (let i = 0; i < 3; i++) code += pool[Math.floor(Math.random() * pool.length)];
+    attempts++;
+  } while (
+    (!/[A-Z]/.test(code) || !/[0-9]/.test(code) || existingCodes.some(c => c.code === code))
+    && attempts < 1000
+  );
+  return code;
+}
+
+/* =========================================================
+   CLASS REPRESENTATIVE SECTION
+   ========================================================= */
+function crLogin() {
+  const u = document.getElementById('cr-username').value;
+  const p = document.getElementById('cr-password').value;
+  const errorEl = document.getElementById('cr-login-error');
+  if (u === CR_CREDENTIALS.username && p === CR_CREDENTIALS.password) {
+    errorEl.textContent = '';
+    isAdminSession = false;
+    resetCRForm();
+    showPage('page-cr-form');
+  } else {
+    errorEl.textContent = 'Invalid username or password.';
+  }
+}
+
+function adminLogin() {
+  const u = document.getElementById('admin-username').value;
+  const p = document.getElementById('admin-password').value;
+  const errorEl = document.getElementById('admin-login-error');
+  if (u === ADMIN_CREDENTIALS.username && p === ADMIN_CREDENTIALS.password) {
+    errorEl.textContent = '';
+    showPage('page-admin-dashboard');
+  } else {
+    errorEl.textContent = 'Invalid Admin ID or password.';
+  }
+}
+
+function resetCRForm() {
+  document.getElementById('day-select').value = '';
+  document.getElementById('subject-select').innerHTML = '<option value="">-- Select Subject --</option>';
+  document.getElementById('subject-field-wrapper').style.display = 'none';
+  document.getElementById('prof-time-wrapper').style.display = 'none';
+  currentSelectedSubjectData = null;
+}
+
+function onDaySelected() {
+  const day = document.getElementById('day-select').value;
+  const subjectSelect = document.getElementById('subject-select');
+  subjectSelect.innerHTML = '<option value="">-- Select Subject --</option>';
+  document.getElementById('prof-time-wrapper').style.display = 'none';
+  currentSelectedSubjectData = null;
+
+  if (!day) {
+    document.getElementById('subject-field-wrapper').style.display = 'none';
+    return;
+  }
+  document.getElementById('subject-field-wrapper').style.display = 'block';
+  ROUTINE[day].forEach((entry, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = entry.subject;
+    subjectSelect.appendChild(opt);
+  });
+}
+
+function onSubjectSelected() {
+  const day = document.getElementById('day-select').value;
+  const idx = document.getElementById('subject-select').value;
+  if (idx === '') {
+    document.getElementById('prof-time-wrapper').style.display = 'none';
+    currentSelectedSubjectData = null;
+    return;
+  }
+  const entry = ROUTINE[day][idx];
+  currentSelectedSubjectData = { day: day, ...entry };
+  document.getElementById('prof-display').value = entry.professor;
+  document.getElementById('time-display').value = entry.time;
+  document.getElementById('final-subject').textContent = entry.subject;
+  document.getElementById('final-prof').textContent = entry.professor;
+  document.getElementById('final-time').textContent = entry.time;
+  document.getElementById('prof-time-wrapper').style.display = 'block';
+}
+
+async function createSession() {
+  if (!currentSelectedSubjectData) return;
+  const now = new Date();
+  const dateStr = now.toLocaleDateString();
+  const startTimeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  const session = {
+    classSection: "CSE",
+    day: currentSelectedSubjectData.day,
+    subject: currentSelectedSubjectData.subject,
+    professor: currentSelectedSubjectData.professor,
+    time: currentSelectedSubjectData.time,
+    date: dateStr,
+    startTime: startTimeStr,
+    active: true,
+    locked: false
+  };
+
+  /* Generate 10 unique active attendance codes */
+  let codes = [];
+  for (let i = 0; i < 10; i++) {
+    const code = generateCode(codes);
+    codes.push({ code: code, status: 'active' });
+  }
+
+  await storageSet('session', session);
+  await storageSet('codes', codes);
+  await storageSet('submissions', []);
+
+  document.getElementById('sess-day').textContent = session.day;
+  document.getElementById('sess-subject').textContent = session.subject;
+  document.getElementById('sess-prof').textContent = session.professor;
+  document.getElementById('sess-time').textContent = session.time;
+  document.getElementById('sess-date').textContent = session.date;
+
+  showPage('page-cr-session');
+  startLivePreview();
+}
+
+function startLivePreview() {
+  refreshLivePreview();
+  if (livePreviewTimer) clearInterval(livePreviewTimer);
+  livePreviewTimer = setInterval(refreshLivePreview, 3000);
+}
+
+async function refreshLivePreview() {
+  const codes = (await storageGet('codes')) || [];
+  const submissions = (await storageGet('submissions')) || [];
+
+  const activeCodes = codes.filter(c => c.status === 'active');
+  const codesDiv = document.getElementById('active-codes-list');
+  codesDiv.innerHTML = '';
+  activeCodes.forEach(c => {
+    const span = document.createElement('span');
+    span.className = 'code-stub';
+    span.textContent = c.code;
+    codesDiv.appendChild(span);
+  });
+
+  const tbody = document.getElementById('live-preview-body');
+  tbody.innerHTML = '';
+  submissions.forEach(s => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${s.serial}</td><td>${s.roll}</td><td>${s.name}</td><td>${s.time}</td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('live-total').textContent = submissions.length;
+}
+
+async function goToCollect() {
+  if (livePreviewTimer) { clearInterval(livePreviewTimer); livePreviewTimer = null; }
+  const submissions = (await storageGet('submissions')) || [];
+  const tbody = document.getElementById('collect-review-body');
+  tbody.innerHTML = '';
+  submissions.forEach(s => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${s.serial}</td><td>${s.name}</td><td>${s.roll}</td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('final-text-wrapper').style.display = 'none';
+  showPage('page-cr-collect');
+}
+
+async function generateFinalText() {
+  const session = await storageGet('session');
+  const submissions = (await storageGet('submissions')) || [];
+
+  const header =
+    "                    Government Polytechnic\n" +
+    "                        Muzaffarpur\n" +
+    "              Computer Science and Engineering\n\n" +
+    "--------------------------------------------------\n" +
+    "--------------------------------------------------\n\n" +
+    `Date: ${session.date}        Time: ${session.startTime}\n\n` +
+    `Sub: ${session.subject}        Prof: ${session.professor}\n\n` +
+    "--------------------------------------------------\n\n" +
+    "Present Students\n\n" +
+    "S.N.        Name                         Roll No.\n";
+
+  let list = "";
+  submissions.forEach(s => {
+    const sn = String(s.serial).padEnd(12, ' ');
+    const nm = String(s.name).padEnd(29, ' ');
+    list += `${sn}${nm}${s.roll}\n`;
+  });
+
+  const finalText = header + list;
+  document.getElementById('final-text-area').value = finalText;
+  document.getElementById('final-text-wrapper').style.display = 'block';
+}
+
+let lastFinalText = '';
+let lastSessionForSend = null;
+
+async function finalSubmit() {
+  const session = await storageGet('session');
+  session.locked = true;
+  session.active = false;
+  await storageSet('session', session);
+
+  lastFinalText = document.getElementById('final-text-area').value;
+  lastSessionForSend = session;
+
+  showPage('page-cr-sent');
+}
+
+function openWhatsApp() {
+  if (!lastSessionForSend) return;
+  const number = PROFESSOR_WHATSAPP[lastSessionForSend.professor] || '';
+  const url = `https://wa.me/${number}?text=${encodeURIComponent(lastFinalText)}`;
+  window.open(url, '_blank');
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
+</body>
+</html>
